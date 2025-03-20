@@ -19,17 +19,15 @@ Este es un proyecto desarrollado en **JavaFX** utilizando **IntelliJ IDEA**. La 
 ## Estructura del proyecto
 ```
 📂 FilesGenerator
+ ┣ 📂 archivos
  ┣ 📂 src
  ┃ ┣ 📂 main
  ┃ ┃ ┣ 📂 java
- ┃ ┃ ┃ ┗ 📂 com.example.filesgenerator
- ┃ ┃ ┃ ┃ ┣ HelloApplication.java
- ┃ ┃ ┃ ┃ ┗ HelloController.java
+ ┃ ┃ ┃ ┗ 📂 com.example
+ ┃ ┃ ┃ ┃ ┣ GenerateInfoFiles.java
+ ┃ ┃ ┃ ┃ ┗ Main.java
  ┃ ┃ ┗ 📂 resources
- ┃ ┃ ┃ ┗ 📂 views
- ┃ ┃ ┃ ┃ ┗ hello-view.fxml
- ┣ 📜 pom.xml (si usas Maven)
- ┣ 📜 build.gradle (si usas Gradle)
+ ┣ 📜 pom.xml
  ┗ 📜 README.md
 ```
 
