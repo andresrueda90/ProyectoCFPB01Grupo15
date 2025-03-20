@@ -15,15 +15,6 @@ Este es un proyecto desarrollado en **JavaFX** utilizando **IntelliJ IDEA**. La 
    git clone https://github.com/andresrueda90/FilesGenerator.git
    cd FilesGenerator
    ```
-2. **Abrir en IntelliJ IDEA**
-   - Selecciona "Abrir proyecto" y elige la carpeta clonada.
-   - Espera a que IntelliJ configure las dependencias.
-
-3. **Ejecutar el proyecto**
-   - Si usas **Maven**:
-     ```bash
-     mvn clean javafx:run
-     ```
 
 ## Estructura del proyecto
 ```
