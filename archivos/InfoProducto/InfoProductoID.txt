@@ -1,6 +1,0 @@
-IDProducto1,NombreProducto1,PrecioPorUnidadProducto1
-Pan35,PantalonBotaRecta,70000
-Cha65,ChaquetaCuero,200000
-Sho78,ShortRasgado,25000
-Zap54,ZapatosMaryJane,67000
-Cam12,CamisetaCuelloRedondo,25000

@@ -1,6 +1,11 @@
 ID Producto;Nombre Producto;Precio Por Unidad
-Pan35;PantalonBotaRecta;70000
-Cam12;CamisetaCuelloRedondo;25000
-Cha65;ChaquetaCuero;200000
-Zap54;ZapatosMaryJane;67000
-Sho78;ShortRasgado;25000
+P0001;Memoria USB;634,25
+P0002;Disco Duro;540,06
+P0003;Silla Gamer;290,20
+P0004;Monitor;671,98
+P0005;Laptop;837,27
+P0006;Impresora;37,10
+P0007;Escritorio;997,29
+P0008;Teclado;236,10
+P0009;Mouse;56,93
+P0010;Auriculares;401,38

@@ -1,6 +1,0 @@
-Pasaporte,52605285
-Pan35,50
-Cha65,75
-Sho78,30
-Zap54,7
-Cam12,34

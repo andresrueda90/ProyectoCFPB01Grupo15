@@ -12,7 +12,8 @@ public class Main {
          */
         GenerateInfoFiles generateInfoFiles = new GenerateInfoFiles();
         boolean createSalesManInfoFile =  generateInfoFiles.createSalesManInfoFile(10, "vendedores.csv");
-        boolean createProductsFile = generateInfoFiles.createProductsFile(5, "productos.csv");
+        // Generar el archivo de productos con 10 productos
+        boolean createProductsFile = generateInfoFiles.createProductsFile(10, "productos.csv");
         /**
          * Verifica si hubo un error en la creación del archivo y muestra un mensaje en la consola.
          */

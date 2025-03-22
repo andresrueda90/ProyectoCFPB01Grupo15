@@ -95,75 +95,52 @@ public class GenerateInfoFiles {
 
 
 
+    /**
+     * Crea un archivo con información pseudoaleatoria de productos basada en archivos existentes.
+     *
+     * @param productsCount Cantidad de productos a generar.
+     * @param nameFile Nombre del archivo a generar.
+     *
+     * @return true si el archivo se crea correctamente, false en caso de error.
+     */
     public boolean createProductsFile(int productsCount, String nameFile) {
-        File directory = new File(DIRECTORY_PATH2);
+        File directory = new File(DIRECTORY_PATH);
 
         if (!directory.exists() || !directory.isDirectory()) {
-            System.err.println("Error: El directorio " + DIRECTORY_PATH2 + " no existe o no es válido.");
+            System.err.println("El directorio no existe o no es una carpeta válida.");
             return false;
         }
 
-        String fileName = "archivos/" + nameFile;
-        List<String> allProducts = new ArrayList<>();
+        String fileName = DIRECTORY_PATH + "/" + nameFile;
+        Set<String> existingProducts = new HashSet<>();
+        List<String> productNamesPool = Arrays.asList("Laptop", "Mouse", "Teclado", "Monitor", "Impresora",
+                "Escritorio", "Silla Gamer", "Disco Duro", "Memoria USB", "Auriculares");
 
-        try {
-            File[] files = directory.listFiles();
-            if (files == null || files.length == 0) {
-                System.err.println("Error: No hay archivos de productos en " + DIRECTORY_PATH2);
-                return false;
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write("ID Producto;Nombre Producto;Precio Por Unidad\n");
+
+            for (int i = 1; i <= productsCount; i++) {
+                String productId = String.format("P%04d", i);
+
+                // Selecciona un nombre de producto único
+                String productName;
+                do {
+                    productName = productNamesPool.get(RANDOM.nextInt(productNamesPool.size()));
+                } while (existingProducts.contains(productName));
+
+                existingProducts.add(productName);
+                double price = 10 + (990 * RANDOM.nextDouble()); // Precio entre 10 y 1000
+
+                writer.write(String.format("%s;%s;%.2f\n", productId, productName, price));
             }
 
-            // Leer todos los productos desde los archivos en InfoProducto
-            for (File file : files) {
-                if (file.isFile() && file.getName().endsWith(".txt")) {
-                    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                        String line;
-                        boolean firstLine = true;
-                        while ((line = reader.readLine()) != null) {
-                            if (firstLine) {
-                                firstLine = false;
-                                continue;
-                            }
-                            allProducts.add(line);
-                        }
-                    }
-                }
-            }
-
-            if (allProducts.isEmpty()) {
-                System.err.println("Error: No se encontraron productos en los archivos.");
-                return false;
-            }
-
-            // productsCount
-            List<String> selectedProducts = new ArrayList<>();
-            Set<Integer> chosenIndexes = new HashSet<>();
-
-            int totalAvailable = allProducts.size();
-            productsCount = Math.min(productsCount, totalAvailable); // Si hay menos productos, toma todos
-
-            while (selectedProducts.size() < productsCount) {
-                int randomIndex = RANDOM.nextInt(totalAvailable);
-                if (!chosenIndexes.contains(randomIndex)) { // No se repite
-                    selectedProducts.add(allProducts.get(randomIndex));
-                    chosenIndexes.add(randomIndex);
-                }
-            }
-
-            // Escribir el archivo final con los productos seleccionados
-            try (FileWriter writer = new FileWriter(fileName)) {
-                writer.write("ID Producto;Nombre Producto;Precio Por Unidad\n");
-                for (String product : selectedProducts) {
-                    writer.write(product.replace(",", ";") + "\n");
-                }
-            }
-
-            System.out.println("Archivo de productos generado correctamente con " + productsCount + " productos: " + fileName);
+            System.out.println("Archivo de productos generado correctamente: " + fileName);
             return true;
         } catch (IOException e) {
-            System.err.println("Error al procesar los archivos de productos: " + e.getMessage());
+            System.err.println("Error al escribir el archivo de productos: " + e.getMessage());
             return false;
         }
     }
+
 
 }
