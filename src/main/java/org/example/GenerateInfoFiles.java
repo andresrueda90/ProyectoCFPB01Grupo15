@@ -120,7 +120,7 @@ public class GenerateInfoFiles {
                         String line;
                         boolean firstLine = true;
                         while ((line = reader.readLine()) != null) {
-                            if (firstLine) { 
+                            if (firstLine) {
                                 firstLine = false;
                                 continue;
                             }
