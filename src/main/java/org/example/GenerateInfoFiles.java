@@ -142,5 +142,38 @@ public class GenerateInfoFiles {
         }
     }
 
+    /**
+     * Método para generar un archivo plano pseudoaleatorio de ventas de un vendedor.
+     *
+     * @param randomSalesCount Cantidad de ventas aleatorias.
+     * @param name             Nombre del vendedor.
+     * @param id               ID del vendedor.
+     */
+    public static boolean createSalesMenFile(int randomSalesCount, String name, long id) {
+        File directory = new File(DIRECTORY_PATH);
+
+        if (!directory.exists() || !directory.isDirectory()) {
+            System.err.println("El directorio no existe o no es una carpeta válida.");
+            return false;
+        }
+        String fileName = DIRECTORY_PATH + "/" + name + "_" + id + ".csv";
+
+        Random random = new Random();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (int i = 0; i < randomSalesCount; i++) {
+                writer.write(name + ";" + id + "\n");
+                for (int j = 0; j < random.nextInt(10) + 1; j++) {
+                    int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
+                    int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
+                    writer.write(productId + ";" + quantity + "\n");
+                }
+            }
+            System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error al crear el archivo de ventas del vendedor " + name + ": " + e.getMessage());
+            return false;
+        }
+    }
 
 }

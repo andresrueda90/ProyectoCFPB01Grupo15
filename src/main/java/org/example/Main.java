@@ -14,6 +14,8 @@ public class Main {
         boolean createSalesManInfoFile =  generateInfoFiles.createSalesManInfoFile(10, "vendedores.csv");
         // Generar el archivo de productos con 10 productos
         boolean createProductsFile = generateInfoFiles.createProductsFile(10, "productos.csv");
+
+        boolean createSalesMenFile = generateInfoFiles.createSalesMenFile(10, "Luis_Ruiz", 72124781);
         /**
          * Verifica si hubo un error en la creación del archivo y muestra un mensaje en la consola.
          */
@@ -24,6 +26,11 @@ public class Main {
         if (!createProductsFile) {
             System.err.println("Error al crear el archivo de productos.");
         }
+
+        // Crear un archivo de ventas para un vendedor específico
+        if (!createSalesMenFile){
+            System.err.println("Error al crear el archivo ventas por vendedor.");
+        };
 
     }
 
