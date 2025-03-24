@@ -156,7 +156,7 @@ public class GenerateInfoFiles {
             System.err.println("El directorio no existe o no es una carpeta válida.");
             return false;
         }
-        String fileName = DIRECTORY_PATH + "/" + name + "_" + id + ".csv";
+        String fileName = DIRECTORY_PATH + "/ventas_" + id + ".csv";
 
         Random random = new Random();
         try (FileWriter writer = new FileWriter(fileName)) {
