@@ -14,8 +14,8 @@ import java.util.*;
  * Clase para generar información de los archivos formato .csv
  */
 public class GenerateInfoFiles {
-    private static final String DIRECTORY_PATH = "archivos";
-    private static final String DIRECTORY_PATH2 = "archivos/InfoProducto";
+    private static final String DIRECTORY_PATH = "datos";
+    
     /**
      * Generador de numeros Aleatorios .
      */
