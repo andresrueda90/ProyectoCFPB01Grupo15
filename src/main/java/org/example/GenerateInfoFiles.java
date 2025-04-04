@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class GenerateInfoFiles {
     private static final String DIRECTORY_PATH = "datos";
-    
+
     /**
      * Generador de numeros Aleatorios .
      */
