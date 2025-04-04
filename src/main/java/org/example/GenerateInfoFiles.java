@@ -63,6 +63,8 @@ public class GenerateInfoFiles {
      * @param nameFile      Nombre del archivo.
      * @return true si se crear el archivo plano correctamente , de lo contrario retorna false
      */
+
+
     public boolean createSalesManInfoFile(int salesmanCount, String nameFile) {
         if (!createPathDirectory(DIRECTORY_PATH)) {
             return false;
@@ -131,7 +133,9 @@ public class GenerateInfoFiles {
                 existingProducts.add(productName);
                 double price = 10 + (990 * RANDOM.nextDouble()); // Precio entre 10 y 1000
 
-                writer.write(String.format("%s;%s;%.2f\n", productId, productName, price));
+                writer.write(String.format(Locale.US, "%s;%s;%.2f\n", productId, productName, price));
+
+                //writer.write(String.format("%s;%s;%.2f\n", productId, productName, price));
             }
 
             System.out.println("Archivo de productos generado correctamente: " + fileName);
@@ -173,6 +177,101 @@ public class GenerateInfoFiles {
         } catch (IOException e) {
             System.err.println("Error al crear el archivo de ventas del vendedor " + name + ": " + e.getMessage());
             return false;
+        }
+    }
+
+    //Creacion de generacion Reporte de Ventas
+    public boolean generateReportSales(String productFileName, String summaryFileName) {
+        Map<String, ProductInfo> productMap = new HashMap<>();
+        String productFile = DIRECTORY_PATH + "/" + productFileName;
+        String summaryFile = DIRECTORY_PATH + "/" + summaryFileName;
+
+        // Codigo que lee el archivo de productos.csv y construye el encabezado de los produtocs
+        try (BufferedReader br = new BufferedReader(new FileReader(productFile))) {
+            String line = br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts.length >= 3) {
+                    String id = parts[0];
+                    String name = parts[1];
+                    double price = Double.parseDouble(parts[2]);
+                    productMap.put(id, new ProductInfo(id, name, price));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error leyendo archivo de productos: " + e.getMessage());
+            return false;
+        }
+
+        // Lee el archivo de ventas y suma las cantidades
+        File folder = new File(DIRECTORY_PATH);
+        File[] files = folder.listFiles((dir, name) -> name.startsWith("ventas_") && name.endsWith(".csv"));
+        if (files == null) return false;
+
+        for (File file : files) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.contains(";")) {
+                        String[] parts = line.split(";");
+                        if (parts.length == 2) {
+                            String productId = parts[0];
+                            int quantity = Integer.parseInt(parts[1]);
+
+                            ProductInfo info = productMap.get(productId);
+                            if (info != null) {
+                                info.addSales(quantity);
+                            }
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("Error leyendo archivo de ventas " + file.getName() + ": " + e.getMessage());
+            }
+        }
+
+        // Logica que ordena los productos por cantidad
+        List<ProductInfo> ordered = new ArrayList<>(productMap.values());
+        ordered.removeIf(p -> p.promedioTotal == 0); // Solo los que se vendieron
+        ordered.sort(Comparator.comparingInt(p -> -p.promedioTotal)); // Descendente
+
+        // Logica que elimina el archivo y vuelve y lo crea
+        File summary = new File(summaryFile);
+        if (summary.exists()) {
+            if (!summary.delete()) {
+                System.err.println("No se pudo eliminar el archivo existente: " + summaryFile);
+                return false;
+            }
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(summary))) {
+            for (ProductInfo p : ordered) {
+                bw.write(String.format(Locale.US, "%s;%.2f;%d\n", p.nombre, p.precio, p.promedioTotal));
+            }
+            System.out.println("Reporte Ventas generado correctamente: " + summaryFile);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error escribiendo el reporte de ventas: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Organizacion de la informacion de productos interno
+    private static class ProductInfo {
+        String id;
+        String nombre;
+        double precio;
+        int promedioTotal;
+
+        ProductInfo(String id, String name, double price) {
+            this.id = id;
+            this.nombre = name;
+            this.precio = price;
+            this.promedioTotal = 0;
+        }
+
+        void addSales(int quantity) {
+            this.promedioTotal += quantity;
         }
     }
 

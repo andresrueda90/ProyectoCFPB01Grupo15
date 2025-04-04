@@ -1,11 +1,11 @@
 ID Producto;Nombre Producto;Precio Por Unidad
-P0001;Escritorio;975,31
-P0002;Auriculares;799,46
-P0003;Mouse;818,73
-P0004;Monitor;46,33
-P0005;Memoria USB;27,75
-P0006;Teclado;98,50
-P0007;Laptop;206,92
-P0008;Impresora;246,71
-P0009;Disco Duro;371,73
-P0010;Silla Gamer;201,48
+P0001;Auriculares;395.15
+P0002;Teclado;661.46
+P0003;Escritorio;168.63
+P0004;Disco Duro;505.01
+P0005;Impresora;680.10
+P0006;Silla Gamer;498.78
+P0007;Memoria USB;13.01
+P0008;Laptop;443.62
+P0009;Mouse;457.11
+P0010;Monitor;619.88
