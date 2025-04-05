@@ -275,4 +275,104 @@ public class GenerateInfoFiles {
         }
     }
 
+    /* inicio  generateReportSalesVendors */
+
+    public boolean generateReportSalesVendors(String nameReportVendors) {
+        Set<Vendor> vendors = new HashSet<>();
+        String summaryFile = DIRECTORY_PATH + "/" + nameReportVendors;
+        File folder = new File(DIRECTORY_PATH);
+        File[] files = folder.listFiles((dir, name) -> name.startsWith("ventas_") && name.endsWith(".csv"));
+        if (files != null) {
+            for (File archivo : files) {
+                readFile(archivo, vendors);
+            }
+        }
+        File fileReportVendors = new File(summaryFile);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileReportVendors))) {
+            for (Vendor vendor : vendors) {
+                bw.write(vendor.toString());
+            }
+            System.out.println("Reporte ventas de vendedores generado correctamente: " + summaryFile);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error escribiendo el reporte de ventas de vendedores: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void readFile(File archivo, Set<Vendor> vendors) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            String id = "";
+            String nameVendor = "";
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(";");
+                if (!isNum(partes[0])) {
+                    id = partes[1].trim();
+                    nameVendor = partes[0].trim();
+                    addVendor(vendors, id, nameVendor, 0);
+                }else if(isNum(partes[0]) && !id.isEmpty()){
+                    int cant = Integer.parseInt(partes[1].trim());
+                    addVendor(vendors, id, nameVendor, cant);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error leyendo archivo " + archivo.getName() + ": " + e.getMessage());
+        }
+    }
+
+    public void addVendor(Set<Vendor> vendors, String identificacion, String nombre, int cantidad) {
+        Vendor newVendor = new Vendor(identificacion, nombre, cantidad);
+        if (vendors.contains(newVendor)) {
+            for (Vendor v : vendors) {
+                if (v.equals(newVendor)) {
+                    v.agregarProductos(cantidad);
+                    break;
+                }
+            }
+        } else {
+            vendors.add(newVendor);
+        }
+    }
+
+    public boolean isNum(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?"); // valida si es numero  acepta positivos negativos  y puntos
+    }
+
+    public class Vendor {
+        private String id;
+        private String name;
+        private int cant;
+
+        public Vendor(String id, String name, int cant) {
+            this.id = id;
+            this.name = name;
+            this.cant = cant;
+        }
+
+        public void agregarProductos(int cantidad) {
+            this.cant += cantidad;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Vendor)) return false;
+            Vendor v = (Vendor) o;
+            return id.equals(v.id) && name.equals(v.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, name);
+        }
+
+        @Override
+        public String toString() {
+            return String.format(Locale.US, "%s;%s;%d\n", id, name, cant);
+        }
+    }
+
+    /* fin  generateReportSalesVendors */
+
 }
