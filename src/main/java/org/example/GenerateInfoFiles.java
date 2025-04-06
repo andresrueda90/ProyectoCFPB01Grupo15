@@ -156,7 +156,58 @@ public class GenerateInfoFiles {
             System.err.println("El directorio no existe o no es una carpeta válida.");
             return false;
         }
+
         String fileName = DIRECTORY_PATH + "/ventas_" + id + ".csv";
+
+        Random random = new Random();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (int i = 0; i < randomSalesCount; i++) {
+                writer.write(name + ";" + id + "\n");
+                for (int j = 0; j < random.nextInt(10) + 1; j++) {
+                    int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
+                    int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
+                    writer.write(productId + ";" + quantity + "\n");
+                }
+            }
+            System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error al crear el archivo de ventas del vendedor " + name + ": " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Método para generar un archivos planos de ventas de vendedores en lectura de archivo vendedor y productos, cantidad aleatorias.
+     *
+     * @param vendedores nombre archivo con datos de vendedores.
+     * @param productos  Nombre  archivo con datos de productos.
+     */
+    public static boolean createSalesMenFileMassive(String vendedores, String productos) {
+        String fileSellers = null;
+        String fileProducts = null;
+        String fileName = null;
+
+        File directory = new File(DIRECTORY_PATH);
+
+        if (!directory.exists() || !directory.isDirectory()) {
+            System.err.println("El directorio no existe o no es una carpeta válida.");
+            return false;
+        }
+
+        fileSellers = DIRECTORY_PATH+"/"+vendedores;
+        fileProducts = DIRECTORY_PATH+"/"+productos;
+        File fileSellersB = new File(fileSellers);
+        File fileProductsB = new File(fileProducts);
+
+        if (!fileSellersB.exists() || !fileProductsB.exists()){
+            System.err.println("Alguno de los archivos no existe o no es válido.");
+            return false;
+        }
+
+
+
+        fileName = DIRECTORY_PATH + "/ventas_" + id + ".csv";
 
         Random random = new Random();
         try (FileWriter writer = new FileWriter(fileName)) {
