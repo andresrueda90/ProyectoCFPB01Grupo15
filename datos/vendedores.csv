@@ -1,11 +1,11 @@
 Tipo Documento;Numero Documento;Nombres Vendedor;Apellidos Vendedor
-Cedula;58757700;Andres;Diaz
-Cedula;72685433;Carlos;Torres
-Cedula;48063761;Felipe;Fernandez
-Nit;64817088;Miguel;Rodriguez
-Nit;65744588;Andres;Torres
-Pasaporte;89178666;Felipe;Rodriguez
-Pasaporte;68857397;Carlos;Lopez
-Pasaporte;28479754;Miguel;Lopez
-Pasaporte;69548930;Miguel;Vargas
-Cedula;76065613;Pedro;Martinez
+Nit;47375278;Felipe;Diaz
+Cedula;42956043;Andres;Ramirez
+Nit;96328638;David;Lopez
+Pasaporte;82873702;Pedro;Lopez
+Pasaporte;63782624;Luis;Perez
+Pasaporte;51269761;Luis;Rodriguez
+Cedula;16405998;David;Martinez
+Nit;44842650;Pedro;Ramirez
+Nit;18452445;Juan;Vargas
+Pasaporte;42327214;Juan;Ramirez
