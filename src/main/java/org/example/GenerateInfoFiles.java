@@ -3,6 +3,7 @@ package org.example;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -187,6 +188,7 @@ public class GenerateInfoFiles {
         String fileSellers = null;
         String fileProducts = null;
         String fileName = null;
+        String lineSellers = null;
 
         File directory = new File(DIRECTORY_PATH);
 
@@ -205,26 +207,50 @@ public class GenerateInfoFiles {
             return false;
         }
 
-
-
-        fileName = DIRECTORY_PATH + "/ventas_" + id + ".csv";
-
-        Random random = new Random();
-        try (FileWriter writer = new FileWriter(fileName)) {
-            for (int i = 0; i < randomSalesCount; i++) {
-                writer.write(name + ";" + id + "\n");
-                for (int j = 0; j < random.nextInt(10) + 1; j++) {
-                    int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
-                    int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
-                    writer.write(productId + ";" + quantity + "\n");
+        try {
+            FileReader openFileSellers = new FileReader(fileSellers);
+            BufferedReader readFileSellers = new BufferedReader(openFileSellers);
+            int lineFileSellers = 0;
+            String sCadena = null;
+            while ((sCadena = readFileSellers.readLine())!=null) {lineFileSellers++;}
+            Random random = new Random();
+            int selectedSeller = 0;
+            selectedSeller = random.nextInt(lineFileSellers) + 1;
+            lineFileSellers=-1;
+            String id = null;
+            String name = null;
+            while ((sCadena = readFileSellers.readLine())!=null) {
+                String[] sellerDetail = sCadena.split(";");
+                lineFileSellers++;
+                if (lineFileSellers==selectedSeller){
+                    id = sellerDetail[2];
+                    name = sellerDetail[3]+"_"+sellerDetail[4];
+                    break;
                 }
             }
-            System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
-            return true;
+
+            int randomSalesCount = random.nextInt(10) + 1;
+
+            fileName = DIRECTORY_PATH + "/ventas_" + id + ".csv";
+
+            try (FileWriter writer = new FileWriter(fileName)) {
+                writer.write(name + ";" + id + "\n");
+                for (int i = 0; i < randomSalesCount; i++) {
+                        int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
+                        int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
+                        writer.write(productId + ";" + quantity + "\n");
+                }
+                System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
+                return true;
+            } catch (IOException e) {
+                System.err.println("Error al crear el archivo de ventas del vendedor " + name + ": " + e.getMessage());
+                return false;
+            }
         } catch (IOException e) {
-            System.err.println("Error al crear el archivo de ventas del vendedor " + name + ": " + e.getMessage());
+            System.err.println("Error al leer el archivo  vendedor " + fileSellers + ": " + e.getMessage());
             return false;
         }
+
     }
 
 }
