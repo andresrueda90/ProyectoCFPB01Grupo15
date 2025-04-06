@@ -171,7 +171,8 @@ public class GenerateInfoFiles {
                 for (int j = 0; j < random.nextInt(10) + 1; j++) {
                     int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
                     int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
-                    writer.write(productId + ";" + quantity + "\n");
+                    String productIdString = String.format("P%04d", productId);
+                    writer.write(productIdString + ";" + quantity + "\n");
                 }
             }
             System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
@@ -245,7 +246,8 @@ public class GenerateInfoFiles {
                 for (int i = 0; i < randomSalesCount; i++) {
                         int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
                         int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
-                        writer.write(productId + ";" + quantity + "\n");
+                        String productIdString = String.format("P%04d", productId);
+                        writer.write(productIdString + ";" + quantity + "\n");
                 }
                 System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
                 return true;
