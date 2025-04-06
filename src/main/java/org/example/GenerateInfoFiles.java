@@ -208,27 +208,30 @@ public class GenerateInfoFiles {
         }
 
         try {
-            FileReader openFileSellers = new FileReader(fileSellers);
+            FileReader openFileSellers = new FileReader(fileSellersB);
             BufferedReader readFileSellers = new BufferedReader(openFileSellers);
             int lineFileSellers = 0;
             String sCadena = null;
-            while ((sCadena = readFileSellers.readLine())!=null) {lineFileSellers++;}
+            while ((sCadena = readFileSellers.readLine())!=null) {
+                lineFileSellers++;
+            }
             Random random = new Random();
             int selectedSeller = 0;
             selectedSeller = random.nextInt(lineFileSellers) + 1;
             lineFileSellers=-1;
             String id = null;
             String name = null;
+            openFileSellers = new FileReader(fileSellersB);
+            readFileSellers = new BufferedReader(openFileSellers);
             while ((sCadena = readFileSellers.readLine())!=null) {
                 String[] sellerDetail = sCadena.split(";");
                 lineFileSellers++;
                 if (lineFileSellers==selectedSeller){
-                    id = sellerDetail[2];
-                    name = sellerDetail[3]+"_"+sellerDetail[4];
+                    id = sellerDetail[1];
+                    name = sellerDetail[2]+"_"+sellerDetail[3];
                     break;
                 }
             }
-
             int randomSalesCount = random.nextInt(10) + 1;
 
             fileName = DIRECTORY_PATH + "/ventas_" + id + ".csv";
