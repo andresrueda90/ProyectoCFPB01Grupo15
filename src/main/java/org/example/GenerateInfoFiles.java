@@ -389,11 +389,11 @@ public class GenerateInfoFiles {
             String nameVendor = "";
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(";");
-                if (!isNum(partes[0])) {
+                if (!isNum(partes[0]) && !isValidProductCode(partes[0])) {
                     id = partes[1].trim();
                     nameVendor = partes[0].trim();
                     addVendor(vendors, id, nameVendor, 0);
-                }else if(isNum(partes[0]) && !id.isEmpty()){
+                }else if(isValidProductCode(partes[0]) && !id.isEmpty()){
                     int cant = Integer.parseInt(partes[1].trim());
                     addVendor(vendors, id, nameVendor, cant);
                 }
@@ -419,6 +419,10 @@ public class GenerateInfoFiles {
 
     public boolean isNum(String str) {
         return str.matches("-?\\d+(\\.\\d+)?"); // valida si es numero  acepta positivos negativos  y puntos
+    }
+
+    public boolean isValidProductCode(String code) {
+        return code.matches("P\\d{4}");
     }
 
     public class Vendor {
