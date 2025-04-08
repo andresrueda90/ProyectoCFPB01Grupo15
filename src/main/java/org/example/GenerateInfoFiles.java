@@ -166,14 +166,12 @@ public class GenerateInfoFiles {
 
         Random random = new Random();
         try (FileWriter writer = new FileWriter(fileName)) {
-            for (int i = 0; i < randomSalesCount; i++) {
-                writer.write(name + ";" + id + "\n");
-                for (int j = 0; j < random.nextInt(10) + 1; j++) {
-                    int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
-                    int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
-                    String productIdString = String.format("P%04d", productId);
-                    writer.write(productIdString + ";" + quantity + "\n");
-                }
+            writer.write(name + ";" + id + "\n");
+            for (int j = 0; j < random.nextInt(10) + 1; j++) {
+                int productId = random.nextInt(10) + 1; // Id de producto aleatorio entre 1 y 10
+                int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
+                String productIdString = String.format("P%04d", productId);
+                writer.write(productIdString + ";" + quantity + "\n");
             }
             System.out.println("Archivo de ventas del vendedor " + name + " creado correctamente.");
             return true;
@@ -244,7 +242,7 @@ public class GenerateInfoFiles {
             try (FileWriter writer = new FileWriter(fileName)) {
                 writer.write(name + ";" + id + "\n");
                 for (int i = 0; i < randomSalesCount; i++) {
-                        int productId = random.nextInt(100) + 1; // Id de producto aleatorio entre 1 y 100
+                        int productId = random.nextInt(10) + 1; // Id de producto aleatorio entre 1 y 10
                         int quantity = random.nextInt(100) + 1; // Cantidad vendida aleatoria entre 1 y 100
                         String productIdString = String.format("P%04d", productId);
                         writer.write(productIdString + ";" + quantity + "\n");
